@@ -1,12 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pocket_ledger/features/wallet/fake_server.dart';
-
-final initialBalance = initialAccountBalanceLoader();
+import 'package:pocket_ledger/features/wallet/data/data_sources/fake_server.dart';
 
 class BalanceNotifier extends AsyncNotifier<int> {
   @override
   Future<int> build() {
-    return initialBalance; // Initial balance is set to the value returned by the loader
+    return initialAccountBalanceLoader(); // Initial balance is set to the value returned by the loader
   }
 
   WithDrawResult withdraw(int amount) {
@@ -54,13 +52,13 @@ sealed class WithDrawResult {
   const WithDrawResult();
 }
 
-class WithDrawSuccess extends WithDrawResult {
+final class WithDrawSuccess extends WithDrawResult {
   const WithDrawSuccess(this.newBalance);
 
   final int newBalance;
 }
 
-class WithDrawFailure extends WithDrawResult {
+final class WithDrawFailure extends WithDrawResult {
   const WithDrawFailure(this.errorMessage);
 
   final String errorMessage;
